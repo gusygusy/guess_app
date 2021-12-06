@@ -13,71 +13,61 @@ body {
 <div class="jumbotran text-center">
 	<h1>Check the oracle quiz</h1>
 	<p class="lead">  Choose number in range 10 - 99 and press button below </p>
+    {% if session %}
+    	{% if oracle_choice %}
+    		{% for k, v in oracle_choice.items() %}
+    		<p class="lead"> Oracle {{ k }} guess is {{ v }} </p>
+    	    {% endfor %}
+    	    <form method="post">
+    			<label for="push">Type here</label>
+    				<input name="push" id="push" required>
+    			    <input type="submit" value="push">
 
-	{% if oracle_choice %}
-		{% for k, v in oracle_choice.items() %}
-		<p class="lead"> Oracle {{ k }} guess is {{ v }} </p>
-	    {% endfor %}
+
+    		</form>
+    	{% endif %}
+    	{% if user_val %}
+    		{% for k, v in oracle_value.items() %}
+    		<p class="lead"> Oracle {{ k }} rating is {{ v }} </p>
+    	    {% endfor %}
+
+    		<p class="lead"> You typed {{ user_val }}  </p>
+
+    	   <form method="get">
+
+                    <button name="repeat" type="submit" value="repeat">Repeat</button>
+    		</form>
+    	{% endif %}
+    	{% if user_val_history and oracle_history %}
+    	{% for k, v in oracle_value.items() %}
+    	<p class="lead"> Our oracle {{ k }} rating {{ v }} </p>
+        {% endfor %}
+    	{% for k, v in oracle_history.items() %}
+
+    	<p class="lead"> Oracle  {{ k }} guessed earlier {{ v }} </p>
+
+    	{% endfor %}
+
+    	<p class="lead"> You typed earlier {{ user_val_history }} </p>
+        <form method="post">
+
+                    <button name="ready" type="submit" value="ready">Push as ready</button>
+    		</form>
+
+    	{% endif %}
+    	{% if not oracle_choice and not user_val_history %}
 	    <form method="post">
-			<label for="push">Type here</label>
-				<input name="push" id="push" required>
-			    <input type="submit" value="push">
-
-
-		</form>
-	{% endif %}
-	{% if user_val %}
-		{% for k, v in oracle_value.items() %}
-		<p class="lead"> Oracle {{ k }} rating is {{ v }} </p>
-	    {% endfor %}
-
-		<p class="lead"> You typed {{ user_val }}  </p>
-
-	   <form method="get">
-
-                <button name="repeat" type="submit" value="repeat">Repeat</button>
-		</form>
-	{% endif %}
-	{% if user_val_history and oracle_history %}
-	{% for k, v in oracle_value.items() %}
-	<p class="lead"> Our oracle {{ k }} rating {{ v }} </p>
-    {% endfor %}
-	{% for k, v in oracle_history.items() %}
-
-	<p class="lead"> Oracle  {{ k }} guessed earlier {{ v }} </p>
-
-	{% endfor %}
-
-	<p class="lead"> You typed earlier {{ user_val_history }} </p>
-    <form method="post">
-
-                <button name="ready" type="submit" value="ready">Push as ready</button>
-		</form>
-	{% endif %}
-	{% if not oracle_value %}
-        {% if session %}
-		<form method="post">
 
 					<button name="ready" type="submit" value="ready">Push as ready</button>
 			</form>
-	    {% endif %}
+    	{% endif %}
+    {% elif not session %}
+	    <form method="post">
+
+					<button name="ready" type="submit" value="ready">Push as ready</button>
+			</form>
+
     {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 <div id="index-jumbotron"></div>
 {% endblock %}
-
